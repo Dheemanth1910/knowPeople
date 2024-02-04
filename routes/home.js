@@ -1,18 +1,32 @@
 var express = require('express');
 const peopleDetailsModel = require("../models/peopleDetails");
+const loginDetailsModel = require("../models/loginDetails");
+
 var router = express.Router();
 router.use(express.urlencoded({ extended: false }));
 
-peopleDetailsModel.fin
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('home', { title: 'Express' });
-});
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
-router.post('/',function(req,res){
-    const username = req.body.username 
+router.post('/',async function(req,res){
     const password = req.body.password 
-    res.send("data sent successfully");
+
+    await loginDetailsModel.findOne({email : req.body.username})
+    .then((result) =>{
+      if(result === null){
+        res.send("The entered username doesn't exist Please try again , ");
+      }
+      else{
+         bcrypt.compare(password, result.password).then(function(reslt) {
+            if(reslt){
+              res.render('home');
+            }
+            else{
+              res.send("wrong Password entered, Please try again.");
+            }
+          });
+      }
+    })
 })
 
 
