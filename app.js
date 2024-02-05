@@ -5,11 +5,18 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const bcrypt = require('bcrypt');
 const loginDetailsModel = require("./models/loginDetails");
+
+// routers 
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var homeRouter = require('./routes/home.js');
 var registerRouter = require("./routes/register.js");
 var loginRouter = require('./routes/login.js');
+var profileRouter = require('./routes/profile.js');
+var searchRouter = require('./routes/search.js');
+
+
 var app = express();
 const Strategy = require("passport-local");
 
@@ -61,7 +68,9 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/home',homeRouter);
 app.use('/register',registerRouter);
-app.use('/login',loginRouter);  
+app.use('/login',loginRouter);
+app.use('/profile',profileRouter);  
+app.use('/search',searchRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
