@@ -9,20 +9,12 @@ const loginDetailsModel = require("../models/loginDetails");
 var router = express.Router();
 router.use(express.urlencoded({ extended: false }));
 
-
 router.get('/',(req,res)=>{
+  console.log(req.isAuthenticated())
   if(req.isAuthenticated()){
     res.render('home');
   }
-  
   else 
-    res.redirect('/')
+    res.redirect('/login')
 })
-
-
-router.post('/',async function(req,res){
-    
-})
-
-
 module.exports = router;

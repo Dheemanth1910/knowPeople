@@ -3,12 +3,49 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+const bcrypt = require('bcrypt');
+const loginDetailsModel = require("./models/loginDetails");
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var homeRouter = require('./routes/home.js');
 var registerRouter = require("./routes/register.js");
+var loginRouter = require('./routes/login.js');
 var app = express();
+const Strategy = require("passport-local");
+
+const passport = require('passport');
+const session = require('express-session');
+
+app.use(session({ secret: 'TOPSECRET', resave: true, saveUninitialized: true }));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(
+  new Strategy(async function verify(username, password, cb) {
+    try {
+      await loginDetailsModel.findOne({email : username})
+      .then((result) =>{
+        if(result === null){
+          return cb("User not found");;
+        }
+        else{
+          let user = result.email ; 
+          bcrypt.compare(password, result.password).then(function(reslt) {
+              if(reslt){
+                return cb(null, user);
+              }
+              else{
+                return cb(null, false);
+              }
+            });
+        }
+      })
+    } catch (err) {
+      console.log(err);
+    }
+  })
+);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,6 +61,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/home',homeRouter);
 app.use('/register',registerRouter);
+app.use('/login',loginRouter);  
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

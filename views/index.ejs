@@ -8,32 +8,52 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
   <link rel="stylesheet" href="stylesheets/login.css">
   </head>
-
-  <body class="d-flex align-items-center py-4 bg-body-tertiary">
-
-    
-  <main class="form-signin w-100 m-auto">
-    
-  <form method="POST" action="/login">
-    <img class="mb-4" src="images/img.svg" alt="knowPeople Logo" width="72" height="57">
-    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-
-    <div class="form-floating">
-      <input type="email" class="form-control" id="floatingInput" name="username"placeholder="name@example.com">
-      <label for="floatingInput">Email address</label>
+  <body>
+    <div class="container-fluid">
+      <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+          <img src="./images/img.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+          <span class="fs-4">knowPeople</span>
+        </a>
+          <ul class="nav nav-pills">
+          <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Home</a></li>
+          <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
+          <li class="nav-item"><a href="/register" class="nav-link">Signup</a></li>
+          <!-- <li class="nav-item"><a href="#" class="nav-link">About</a></li> -->
+        </ul>
+      </header>
     </div>
-    <div class="form-floating">
-      <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
-      <label for="floatingPassword">Password</label>
+    <div class="px-4 pt-5 my-5 text-center border-bottom">
+      <h1 class="display-4 fw-bold text-body-emphasis">Find People with Similar Interests !</h1>
+      <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">KnowPeople makes it easy to create a personalized profile, join communities, and engage in lively discussions. Discover new perspectives, form lasting friendships, and celebrate what makes you unique. Join KnowPeople today and turn common interests into extraordinary connections!.</p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+          <a href="/login"><button type="button" class="btn btn-primary btn-lg px-4 me-sm-3">Login</button></a>
+          <a href="/register"><button type="button" class="btn btn-outline-secondary btn-lg px-4">Signup</button></a>
+        </div>
+      </div>
+      <div class="overflow-hidden" style="max-height: 50vh;">
+        <div class="container px-5">
+          <img src="images/home-img.png" class="img-fluid border rounded-3 shadow-lg mb-4" alt="Image of different people on their phones" width="500" height="500" loading="lazy">
+        </div>
+      </div>
     </div>
-
-    <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
-    <a class="button brn-primary" href="/register" role="button">Register</a>
-    <p class="mt-5 mb-3 text-body-secondary">© knowPeople 2024</p>
-  </form>
-
-
-  </main>
-  <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <div>
+      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 ">
+        <div class="col-md-4 d-flex align-items-center">
+          <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+            <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+          </a>
+          <span class="mb-3 mb-md-0 text-body-secondary">© 2024 KnowPeople Inc</span>
+        </div>
+    
+        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+          <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"></use></svg></a></li>
+          <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li>
+          <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg></a></li>
+        </ul>
+      </footer>
+    </div>
+    <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   </body>
 </html>
