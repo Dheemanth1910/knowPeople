@@ -62,7 +62,7 @@
                 </div>
              </div>
              <div class="col-2 "> 
-                <div class="card-sm icon art"><a><img src="images/art.png" class="rounded mx-auto" height="200" width="200" alt="Travel"></a>
+                <div class="card-sm icon art"><a><img src="images/art.png" class="rounded mx-auto" height="200" width="200" alt="Art & Creativity"></a>
                     <p>Art and Creativity</p>
                 </div>
              </div>
@@ -112,23 +112,8 @@
     </div>
     <div class="album py-5 bg-body-tertiary">
         <div class="container">
-
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            <div class="col">
-                <div class="card shadow-sm">
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-                    <div class="card-body">
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                        </div>
-                        <small class="text-body-secondary">9 mins</small>
-                    </div>
-                    </div>
-                </div>
-            </div>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="userContainer">
+            
         </div>
     </div>
 
@@ -154,13 +139,61 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script>
+        function displayUsers(data){
+            let htmlData = '' ;
+            let n = data.length 
+            for(let i=0;i<21;i++){
+                let imgSrc=""
+                if(data[i].img ===""){
+                    if(data[i].gender === "Male")
+                        imgSrc='https://www.shutterstock.com/image-vector/businessman-icon-260nw-564112600.jpg';
+                    else 
+                        imgSrc='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS09jmvXRSVsoLauaIW8p3wRQkMPIzJ8CguLw&usqp=CAU'
+                }
+                htmlData += `
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src=${imgSrc}class="bd-placeholder-img card-img-top" width="100%" height="225" >
+                            <div class="card-body">
+                            <h3 class= "card-title">${data[i].first_name} ${data[i].last_name}</h3>
+                            <p class="card-text">Interests : ${data[i].interests}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+                `
+            }
+            $('#userContainer').html(htmlData);
+        }
+        let activePreferences = [] 
         $('.icon').on('click',(req,res)=>{
 
-            let classes = req.currentTarget.getAttribute('class').split(' ')
-            console.log(classes[2]);
-            $()
-
+            let classes = req.currentTarget.getAttribute('class').split(' ');
+            req.currentTarget.classList.toggle("clicked")
+            let preference = (classes[2]);
+            let ind = activePreferences.indexOf(preference)
+            if( ind === -1 ){
+                activePreferences.push(preference);
+            }
+            else{
+                activePreferences.splice(ind,1);
+            }
+            // console.log(activePreferences);
+            let form_data = {active : activePreferences};
+            JSON.stringify(form_data);
+            console.log(form_data)
+            $.post( "/search", form_data)
+            .done(function( data ) {
+                console.log(data)
+                displayUsers(data);
         })
+        })
+
     </script>
     </body>
 </html>

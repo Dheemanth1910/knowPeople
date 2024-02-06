@@ -78,3 +78,7 @@
   .icon{
     cursor: pointer;
   }
+  .clicked{
+    background-color: rgb(135, 138, 138);
+    border-radius: 20px;
+  }
