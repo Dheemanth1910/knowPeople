@@ -75,7 +75,6 @@
     display: block !important;
   }
 
-  .searchIcon{
-    width: 200px;
-    height:200px;
+  .icon{
+    cursor: pointer;
   }
