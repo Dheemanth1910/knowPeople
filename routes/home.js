@@ -10,7 +10,6 @@ var router = express.Router();
 router.use(express.urlencoded({ extended: false }));
 
 router.get('/',(req,res)=>{
-  console.log(req.isAuthenticated())
   if(req.isAuthenticated()){
     res.render('home');
   }

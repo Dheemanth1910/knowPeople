@@ -27,10 +27,10 @@
             <span class="fs-4">knowPeople</span>
           </a>
             <ul class="nav nav-pills">
-            <li class="nav-item"><a href="/home" class="nav-link" aria-current="page">Home</a></li>
-            <li class="nav-item"><a href="/profile" class="nav-link ">Profile</a></li>
-            <li class="nav-item"><a href="/search" class="nav-link active">Search</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Logout</a></li>
+            <li class="nav-item"><a href="/home" class="btn btn-outline-dark mx-1" aria-current="page">Home</a></li>
+            <li class="nav-item"><a href="/profile" class="btn btn-outline-dark mx-1">Profile</a></li>
+            <li class="nav-item"><a href="/search" class="btn btn-outline-dark mx-1 active">Search</a></li>
+            <li class="nav-item"><a href="#" class="btn btn-outline-dark mx-1">Logout</a></li>
           </ul>
         </header>
       </div>
@@ -45,23 +45,23 @@
         </div>
     </section>
     <div class="container">
-        <div class="row">
-            <div class="col-2"> 
+        <div class="row px-5">
+            <div class="col-2 "> 
                 <div class="card-sm icon outdoor"><a><img src="images/hiking.png" class="rounded mx-auto" height="200" width="200" alt="Outdoor Adventure"></a>
                     <p>outdoor</p>
                 </div>
              </div>
-             <div class="col-2"> 
+             <div class="col-2 "> 
                 <div class="card-sm icon cooking"><a><img src="images/cooking.png" class="rounded mx-auto" height="200" width="200" alt="Cooking and Culinary Arts"></a>
                     <p>Cooking and Culinary Arts</p>
                 </div>
              </div>
-             <div class="col-2 " > 
+             <div class="col-2  " > 
                 <div class="card-sm icon gaming"><a><img src="images/gamepad.png" class="rounded mx-auto" height="200" width="200" alt="Gaming"></a>
                     <p>Gaming</p>
                 </div>
              </div>
-             <div class="col-2 "> 
+             <div class="col-2  "> 
                 <div class="card-sm icon art"><a><img src="images/art.png" class="rounded mx-auto" height="200" width="200" alt="Art & Creativity"></a>
                     <p>Art and Creativity</p>
                 </div>
@@ -71,20 +71,18 @@
                     <p>Travel</p>
                 </div>
             </div>
-            <div class="col-2"> 
+            <div class="col-2 "> 
                 <div class="card-sm icon sports"><a><img src="images/dumbbell.png" class="rounded mx-auto" height="200" width="200" alt="Sports and Fitness"></a>
                     <p>Fitness and Sports</p>
                 </div>
              </div>
-        </div>
-        <div class="row">
-            <div class="col-2"> 
+            <div class="col-2 "> 
                 <div class="card-sm icon read"><a><img src="images/book.png" class="rounded mx-auto" height="200" width="200" alt="Reading"></a>
                     <p>Reading</p>
                 </div>
              </div>
-             <div class="col-2"> 
-                <div class="card-sm music"><a><img src="images/music.png" class="rounded mx-auto" height="200" width="200" alt="Music"></a>
+             <div class="col-2 "> 
+                <div class="card-sm icon music"><a><img src="images/music.png" class="rounded mx-auto" height="200" width="200" alt="Music"></a>
                     <p>Music</p>
                 </div>
              </div>
@@ -108,7 +106,7 @@
                     <p>Science and Astronomy</p>
                 </div>
              </div>
-        </div>
+        <div>
     </div>
     <div class="album py-5 bg-body-tertiary">
         <div class="container">
@@ -126,12 +124,6 @@
             </a>
             <span class="mb-3 mb-md-0 text-body-secondary">© 2024 KnowPeople Inc</span>
         </div>
-    
-        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-            <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"></use></svg></a></li>
-            <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li>
-            <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg></a></li>
-        </ul>
         </footer>
     </div>
     
@@ -183,7 +175,7 @@
             else{
                 activePreferences.splice(ind,1);
             }
-            // console.log(activePreferences);
+            console.log(activePreferences);
             let form_data = {active : activePreferences};
             JSON.stringify(form_data);
             console.log(form_data)
