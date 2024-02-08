@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "test": "mocha ./tests/*.spec.js --exit",
+    "test:watch": "mocha --watch ./src/tests/*.spec.js",
+    "coverage": "nyc --reporter=text npm test"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
@@ -19,6 +22,20 @@
     "morgan": "~1.9.1",
     "nodemon": "^3.0.3",
     "passport": "^0.7.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "@aws-sdk/client-s3": "^3.298.0",
+    "@aws-sdk/lib-storage": "^3.298.0",
+    "dotenv": "^16.0.3",
+    "formidable": "^2.1.1"
+  },
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^9.2.2",
+    "nyc": "^15.1.0",
+    "rewire": "^6.0.0",
+    "sinon": "^13.0.1",
+    "sinon-chai": "^3.7.0",
+    "supertest": "^6.2.2"
   }
 }

@@ -11,8 +11,11 @@ router.use(express.urlencoded({ extended: false }));
 
 router.get('/',(req,res)=>{
   if(req.isAuthenticated()){
-    res.render('home');
-  }
+    peopleDetailsModel.findOne({email:req.user})
+    .then((data)=>{
+        res.render("home", {first_name :data.first_name,last_name : data.last_name});
+    })
+}
   else 
     res.redirect('/login')
 })
