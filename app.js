@@ -9,7 +9,6 @@ const loginDetailsModel = require("./models/loginDetails");
 // routers 
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var homeRouter = require('./routes/home.js');
 var registerRouter = require("./routes/register.js");
 var loginRouter = require('./routes/login.js');
@@ -65,7 +64,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/home',homeRouter);
 app.use('/register',registerRouter);
 app.use('/login',loginRouter);
