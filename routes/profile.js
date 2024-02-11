@@ -10,7 +10,7 @@ router.get('/',(req,res)=>{
     if(req.isAuthenticated()){
         peopleDetailsModel.findOne({email:req.user})
         .then((data)=>{
-            res.render("profile", {name :data.first_name,age:data.age, intrests:data.interests,country:data.country,age:data.age});
+            res.render("profile", {name :data.first_name,age:data.age, intrests:data.interests,country:data.country,age:data.age,bio:data.bio,imgSrc:data.profileImg});
         })
     }
     else 
@@ -18,18 +18,27 @@ router.get('/',(req,res)=>{
     
 })
 
-router.post("/edit",(req,res)=>{
-    console.log(req.body) ;
-    res.send('Data-recieved');
+router.post("/edit",async (req,res)=>{
+  console.log(req.body) ;
+  if(req.body.bio!=undefined){
+    await peopleDetailsModel.updateOne({email:req.user},{bio:req.body.bio}).exec()
+  }
+  if(req.body.phone!=undefined){
+    await peopleDetailsModel.updateOne({email:req.user},{phone:req.body.phone}).exec()
+  }
+  const keysWithValueOn = Object.keys(req.body).filter(key => req.body[key] === 'on');
+
+  // console.log(keysWithValueOn);
+  await peopleDetailsModel.updateOne({email:req.user},{$set:{interests:keysWithValueOn}}).exec();
+  res.redirect('/profile');
 })
 
 router.post("/changeProfilePic",async (req,res)=>{
    await fileparser(req)
-  .then(data => {
-    res.status(200).json({
-      message: "Success",
-      data
-    })
+  .then(async data => {
+    await peopleDetailsModel.updateOne({email:req.user},{$set:{profileImg:data.Location}}).exec();
+    console.log(data);
+    res.redirect('/profile');
   })
   .catch(error => {
     res.status(400).json({

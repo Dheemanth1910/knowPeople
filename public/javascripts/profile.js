@@ -61,6 +61,7 @@ document.getElementById('inputImage').addEventListener('change', function(e) {
         if (response.ok) {
             // Handle successful response
             console.log('Image uploaded successfully');
+            location.reload();
         } else {
             // Handle error response
             console.error('Error uploading image:', response.statusText);

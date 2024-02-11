@@ -63,7 +63,7 @@
               <div class="card">
                 <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
                   <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
-                      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp" id="profilePic"
+                      <img src=<%=imgSrc%> id="profilePic"
                         alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2" data-bs-toggle="modal" data-bs-target="#profilePicModal"
                         style="width: 150px; z-index: 1">
 
@@ -99,7 +99,7 @@
                       <div class="mb-5">
                         <p class="lead fw-normal mb-1">About</p>
                         <div class="p-2" style="background-color: #f8f9fa;">
-                          <p class="font-italic mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem aliquid voluptatibus ratione quod! Ad expedita quae architecto odio fugit cumque. Libero fugiat earum provident hic. Enim nobis impedit dolore qui.</p>
+                          <p class="font-italic mb-0"><%=bio%></p>
                           <p class="font-italic mb-0">Age : <%= age%></p>
                           <p class="font-italic mb-0">Interests : <%= intrests%></p>
                         </div>

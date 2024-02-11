@@ -22,7 +22,8 @@ const Strategy = require("passport-local");
 const passport = require('passport');
 const session = require('express-session');
 
-app.use(session({ secret: 'TOPSECRET', resave: true, saveUninitialized: true }));
+app.use(session({ secret: 'TOPSECRET', resave: true, saveUninitialized: true ,cookie: {
+  maxAge: 24 * 60 * 60 * 1000}}));
 
 app.use(passport.initialize());
 app.use(passport.session());

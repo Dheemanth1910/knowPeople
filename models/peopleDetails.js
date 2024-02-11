@@ -6,10 +6,12 @@ const peopleDetailsSchema = new mongoose.Schema({
     last_name : String ,
     email : String,
     gender : String,
-    interests : String, 
+    interests : [String], 
     country : String,
     age : Number,
     profileImg : String,
+    bio : String,
+    phone : Number 
 })
 
 const peopleDetailsModel = mongoose.model('peopleDetailsModel',peopleDetailsSchema);
