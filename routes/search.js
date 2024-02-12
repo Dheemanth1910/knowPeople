@@ -15,7 +15,7 @@ router.post('/',(req,res)=>{
     let activePreferences = req.body["active[]"]
     peopleDetailsModel.find({interests:{$in : activePreferences}},{_id:0})
     .then((data)=>{
-        console.log(data)
+        // console.log(data)
         res.send(data);
     })
     
