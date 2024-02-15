@@ -6,38 +6,8 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const loginDetailsModel = require("../models/loginDetails");
 const passport = require("passport");
-const nodemailer = require("nodemailer");
-const {username,pwd} = require('../credentials/gmail.cred');
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: username,
-    pass: pwd,
-  },
-});
-
-function sendMail(email){
-  const otp = Math.floor(Math.random() * 10000);
-  async function main(otp) {  
-    const info = await transporter.sendMail({
-      from: username, 
-      to: email, 
-      subject: "Password Change OTP", 
-      text: `The OTP for changing your password is : ${otp}`, 
-    },(err,info)=>{
-      if(err){
-        console.log(err);
-        return
-      }
-      console.log("Message sent: %s", info.messageId);
-      
-    });
-  }
-  main(otp).catch(console.error);
-  return otp;
-}
-
+const {sendMail} = require("../controllers/sendMail.controller");
 
 const peopleDetailsModel = require("../models/peopleDetails");
 
@@ -66,6 +36,7 @@ router.post('/forgotPassword',(req,res)=>{
   // console.log(req.body);
   username1 = req.body.email,
   otp = sendMail(req.body.email)
+  
   res.send("otp sent successfully");
 })
 

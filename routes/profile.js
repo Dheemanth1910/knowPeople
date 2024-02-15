@@ -34,6 +34,7 @@ router.post("/edit",async (req,res)=>{
 })
 
 router.post("/changeProfilePic",async (req,res)=>{
+  console.log(req); 
    await fileparser(req)
   .then(async data => {
     await peopleDetailsModel.updateOne({email:req.user},{$set:{profileImg:data.Location}}).exec();

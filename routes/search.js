@@ -20,6 +20,15 @@ router.post('/',(req,res)=>{
     })
     
 })
-
+router.post('/like',async (req,res)=>{
+    console.log(req.user) 
+    const userId = req.body.id; 
+    let likedName = "" ;
+    await peopleDetailsModel.findOneAndUpdate({id:userId},{$push:{likes:{name:req.user}}}).then((data)=>{
+        likedName = data.first_name + " " +data.last_name ;
+    })
+    await peopleDetailsModel.updateOne({email:req.user},{$push:{liked:{name:likedName}}}).exec()
+    res.send("data Recieved")
+})
 
 module.exports = router;

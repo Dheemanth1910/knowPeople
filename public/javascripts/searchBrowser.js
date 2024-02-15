@@ -51,7 +51,7 @@ div.innerHTML = `
             <h3 class="card-title">${item.first_name} ${item.last_name}</h3>
             <p class="card-text">Interests: ${item.interests}</p>
             <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
+                <div class="    ">
                     <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal${item.id}">View</button>
                     <div class="modal fade" id="exampleModal${item.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <section class="modal-dialog" style="background-color: #f4f5f7;">
@@ -64,8 +64,7 @@ div.innerHTML = `
                                         style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
                                         <img src="${imgSrc}"
                                         alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
-                                        <h5>Marie Horwitz</h5>
-                                        <p>Web Designer</p>
+                                        <h5>${item.first_name} ${item.last_name}</h5>
                                         <i class="far fa-edit mb-5"></i>
                                     </div>
                                     <div class="col">
@@ -105,13 +104,29 @@ div.innerHTML = `
 
                         </section>
                     </div>
+                    <button class="like btn btn-sm btn-outline-secondary" id ="likeButton${item.id}">Like</button>
                 </div>
             </div>
         </div>
     </div>
 `;
 itemsContainer.appendChild(div);
+
 });
+$('.like').on('click',(e)=>{
+    e.preventDefault();
+    const buttonId = e.currentTarget.id;
+    const userId = buttonId.substring(10,buttonId.length);
+    console.log(userId);
+
+    $.ajax({
+        type:"POST",
+        url:"/search/like",
+        data:{id : userId}
+    }).done((data)=>{
+        console.log(data);
+    })
+})
 }
 // Function to generate pagination links
 
@@ -135,3 +150,5 @@ pageLink.addEventListener('click', () => {
 paginationContainer.appendChild(pageLink);
 }
 }
+
+

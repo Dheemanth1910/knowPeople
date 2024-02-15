@@ -8,6 +8,9 @@ var app = require('../app');
 var debug = require('debug')('fakesocial:server');
 var http = require('http');
 
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
 /**
  * Get port from environment and store in Express.
  */
@@ -19,7 +22,6 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -88,3 +90,12 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  socket.on('chat message', (msg) => {
+    console.log('message: ' + msg);
+    io.emit('chat message', msg);
+  });
+  socket.on('disconnect', () => {
+    console.log('user disconnected');})
+});

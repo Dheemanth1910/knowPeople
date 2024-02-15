@@ -19,4 +19,13 @@ router.get('/',(req,res)=>{
   else 
     res.redirect('/login')
 })
+router.post('/getLiked',async (req,res)=>{
+  await peopleDetailsModel.findOne({email:req.user},{liked:1,_id:0}).then((data)=>{
+    res.send(data);
+  })
+  .catch((err)=>{
+    res.send(err);
+  })
+})
+
 module.exports = router;
