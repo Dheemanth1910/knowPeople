@@ -41,4 +41,8 @@ function sendMail(email){
     return otp;
 }
 
-module.exports = {sendMail};
+
+module.exports = {
+  transporter,
+  sendMail
+};

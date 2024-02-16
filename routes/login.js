@@ -18,7 +18,7 @@ router.use(express.urlencoded({ extended: false }));
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('login');
+  res.status(200).render('login');
 });
 
 router.post('/',  passport.authenticate("local", {
@@ -28,16 +28,16 @@ router.post('/',  passport.authenticate("local", {
 }))
 
 router.get('/forgotPassword',(req,res)=>{
-  res.render('forgotPassword')
+  res.status(200).render('forgotPassword')
 })
 let otp;
 let username1 ;
+
 router.post('/forgotPassword',(req,res)=>{
   // console.log(req.body);
   username1 = req.body.email,
   otp = sendMail(req.body.email)
-  
-  res.send("otp sent successfully");
+  res.status(200).send("otp sent successfully");
 })
 
 router.post('/checkOtp',(req,res)=>{

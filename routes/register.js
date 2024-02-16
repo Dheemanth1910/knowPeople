@@ -29,6 +29,8 @@ router.post('/submit',async (req,res)=>{
                 let data={email : req.body.email, 
                     password : hash,}
                 await loginDetailsModel.create(data);
+                let person = {first_name:req.body.firstName,last_name:req.body.lastName,};
+                await peopleDetailsModel.create(person) ;
                 res.send("data recieved successfully, Please login agian. ")
             })
         }

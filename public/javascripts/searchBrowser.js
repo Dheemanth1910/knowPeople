@@ -127,6 +127,24 @@ $('.like').on('click',(e)=>{
         console.log(data);
     })
 })
+
+var socket = io();
+        socket.on('connect', () => {
+            console.log('Connected to server');
+        });
+        document.querySelector('.like').addEventListener('click', () => {
+        socket.emit('sendNotification', { email: 'test@gmail.com' });
+        })
+        socket.on('notification', (data) => {
+            console.log('Received notification:', data);
+            displayNotification(data.message);
+        });
+        function displayNotification(message) {
+            const notificationContainer = document.getElementById('notificationContainer');
+            const notificationElement = document.createElement('div');
+            notificationElement.textContent = message;
+            notificationContainer.appendChild(notificationElement);
+        }
 }
 // Function to generate pagination links
 
@@ -150,5 +168,4 @@ pageLink.addEventListener('click', () => {
 paginationContainer.appendChild(pageLink);
 }
 }
-
 

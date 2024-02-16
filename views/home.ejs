@@ -39,6 +39,8 @@
         </div>
       </div>
     </div>
+    <div id="notification-bar">
+    </div>
     <div>
       <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 ">
         <div class="col-md-4 d-flex align-items-center">
@@ -55,6 +57,7 @@
     <script src="javascripts/index.js" type="module"></script>
     </script>
     <script>
+      
       let likedArray ;
       $.ajax({
         method:"POST",
@@ -75,12 +78,42 @@
                       </div>
                     </a>`
         $('#targetLiked').append(htmlData);
+        
       });
       })
     </script>
     <script src="/socket.io/socket.io.js"></script>
     <script>
+        
         var socket = io();
+        socket.on('connect', () => {
+          let e_mail = '<%=email%>' ;
+          const socketId = socket.id;
+          console.log('Socket ID:', socketId);
+          socket.emit('clientSocketId', {socketId,e_mail});
+          
+    });
+    socket.on('notification', (data) => {
+            console.log('Received notification:', data);
+            data=`<div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="toast-header">
+            <img src="..." class="rounded me-2" alt="...">
+            <strong class="me-auto">Bootstrap</strong>
+            <small>11 mins ago</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div class="toast-body">
+            Hello, world! This is a toast message.
+          </div>
+        </div>
+      </div>
+            `
+        $('#notification-bar').append(data)
+        const toastLiveExample = document.getElementById('liveToast')
+        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+        toastBootstrap.show()
+        });
     </script>
     </body>
 </html>

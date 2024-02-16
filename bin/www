@@ -82,6 +82,7 @@ function onError(error) {
 /**
  * Event listener for HTTP server "listening" event.
  */
+const userSocketMap = {}; 
 
 function onListening() {
   var addr = server.address();
@@ -96,6 +97,20 @@ io.on('connection', (socket) => {
     console.log('message: ' + msg);
     io.emit('chat message', msg);
   });
+  socket.on('clientSocketId', (message)=>{
+    // console.log('client-Id',message);
+    userSocketMap[message.e_mail] = message.socketId; 
+    console.log(userSocketMap);
+  } )
+  socket.on('sendNotification', ({ email }) => {
+    const recipientSocket = userSocketMap[email];
+    if (recipientSocket) {
+      console.log(recipientSocket)
+      io.to(recipientSocket).emit('notification', { message: 'You received a notification!' });
+    } else {
+        console.log('Recipient not connected');
+    }
+  })
   socket.on('disconnect', () => {
     console.log('user disconnected');})
-});
+}); 
