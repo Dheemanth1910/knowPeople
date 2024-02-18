@@ -92,21 +92,18 @@ function onListening() {
   debug('Listening on ' + bind);
 }
 io.on('connection', (socket) => {
-  console.log('a user connected');
-  socket.on('chat message', (msg) => {
-    console.log('message: ' + msg);
-    io.emit('chat message', msg);
-  });
   socket.on('clientSocketId', (message)=>{
     // console.log('client-Id',message);
     userSocketMap[message.e_mail] = message.socketId; 
     console.log(userSocketMap);
   } )
-  socket.on('sendNotification', ({ email }) => {
-    const recipientSocket = userSocketMap[email];
+  socket.on('sendNotification', (data) => {
+    console.log(data);
+    const {recieverEmail, senderName } = data ;
+    console.log(recieverEmail,senderName);
+    const recipientSocket = userSocketMap[recieverEmail];
     if (recipientSocket) {
-      console.log(recipientSocket)
-      io.to(recipientSocket).emit('notification', { message: 'You received a notification!' });
+      io.to(recipientSocket).emit('notification', { message: `You received a like from ${senderName}` });
     } else {
         console.log('Recipient not connected');
     }

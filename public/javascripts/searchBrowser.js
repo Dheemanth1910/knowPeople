@@ -1,6 +1,8 @@
-let activePreferences = [] 
-$('.icon').on('click',(req,res)=>{
+let activePreferences =[];
 
+$('.icon').on('click',(req)=>{
+    req.preventDefault();
+    console.log('button clicked');
     let classes = req.currentTarget.getAttribute('class').split(' ');
     req.currentTarget.classList.toggle("clicked")
     let preference = (classes[2]);
@@ -11,13 +13,10 @@ $('.icon').on('click',(req,res)=>{
     else{
         activePreferences.splice(ind,1);
     }
-    console.log(activePreferences);
     let form_data = {active : activePreferences};
     JSON.stringify(form_data);
-    console.log(form_data)
     $.post( "/search", form_data)
     .done(function( data ) {
-        console.log(data)
         const itemsPerPage = 12; // Change this to your desired items per page
         const initialPage = 1;
         displayItems(initialPage, itemsPerPage,data);
@@ -104,7 +103,7 @@ div.innerHTML = `
 
                         </section>
                     </div>
-                    <button class="like btn btn-sm btn-outline-secondary" id ="likeButton${item.id}">Like</button>
+                    <button class="like btn btn-sm btn-outline-secondary" data-custom-data="${item.email}" id ="likeButton${item.id}">Like</button>
                 </div>
             </div>
         </div>
@@ -117,14 +116,12 @@ $('.like').on('click',(e)=>{
     e.preventDefault();
     const buttonId = e.currentTarget.id;
     const userId = buttonId.substring(10,buttonId.length);
-    console.log(userId);
 
     $.ajax({
         type:"POST",
         url:"/search/like",
         data:{id : userId}
     }).done((data)=>{
-        console.log(data);
     })
 })
 
@@ -132,19 +129,10 @@ var socket = io();
         socket.on('connect', () => {
             console.log('Connected to server');
         });
-        document.querySelector('.like').addEventListener('click', () => {
-        socket.emit('sendNotification', { email: 'test@gmail.com' });
+        $('.like').on('click', (e) => {
+        console.log(e);
+        socket.emit('sendNotification', { recieverEmail: 'test@gmail.com', senderName : name});
         })
-        socket.on('notification', (data) => {
-            console.log('Received notification:', data);
-            displayNotification(data.message);
-        });
-        function displayNotification(message) {
-            const notificationContainer = document.getElementById('notificationContainer');
-            const notificationElement = document.createElement('div');
-            notificationElement.textContent = message;
-            notificationContainer.appendChild(notificationElement);
-        }
 }
 // Function to generate pagination links
 
@@ -168,4 +156,3 @@ pageLink.addEventListener('click', () => {
 paginationContainer.appendChild(pageLink);
 }
 }
-

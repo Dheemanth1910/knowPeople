@@ -6,8 +6,14 @@ const { data } = require("jquery");
 
 
 router.get('/',(req,res)=>{
-    if(req.isAuthenticated())
-        res.render("search");
+
+    if(req.isAuthenticated()){
+        peopleDetailsModel.findOne({email:req.user})
+        .then((data)=>{
+            res.render("search", {name:data.first_name,age:data.age, intrests:data.interests,country:data.country,age:data.age,bio:data.bio,imgSrc:data.profileImg,email : data.email});
+        })
+
+    }
     else 
         res.redirect('/login');
 })

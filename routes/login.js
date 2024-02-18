@@ -18,31 +18,41 @@ router.use(express.urlencoded({ extended: false }));
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.status(200).render('login');
+  res.status(200).render('login',{messages: req.flash('error')} );
 });
 
 router.post('/',  passport.authenticate("local", {
   successRedirect: "/home",
   failureRedirect: "/login",
-  failureFlash: true
+  failureFlash: 'Username or password incorrect , Please try again.',
 }))
 
 router.get('/forgotPassword',(req,res)=>{
   res.status(200).render('forgotPassword')
 })
-let otp;
-let username1 ;
 
+const forgotPasswordUsers = new Set();
+const otpToMail = {};
 router.post('/forgotPassword',(req,res)=>{
   // console.log(req.body);
-  username1 = req.body.email,
-  otp = sendMail(req.body.email)
+  let otp;
+  let username1 ;
+  username1 = req.body.email;
+  otp = sendMail(username1);
+  otpToMail[otp] = username1
+  hashedObj = (username1 + otp ) 
+  forgotPasswordUsers.add(hashedObj);
+  console.log(forgotPasswordUsers);
   res.status(200).send("otp sent successfully");
 })
 
 router.post('/checkOtp',(req,res)=>{
   console.log(req.body.otpVal);
-  if(otp == req.body.otpVal){
+  const mail = otpToMail[req.body.otpVal] 
+  const actual = mail + req.body.otpVal ;
+  console.log(actual);
+
+  if(forgotPasswordUsers.has(actual)){
     res.send("true")
   }
   else{
@@ -51,16 +61,15 @@ router.post('/checkOtp',(req,res)=>{
 })
 
 router.post('/updatePassword',async (req,res)=>{
+  let username1 = req.body.email;
   let password = req.body.password;
   bcrypt.hash(password, saltRounds, async function(err, hash) {
     if(err){
         console.log(err);
         res.send("false")
-    }
-    
+    }  
     await loginDetailsModel.updateOne({email:username1},{$set:{password:hash}});
-    
-    res.send("data recieved successfully, Please login agian. ")
+    res.redirect('/login');
 })
 })
 

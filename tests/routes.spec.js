@@ -1,6 +1,8 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const express = require('express');
+var flash = require('connect-flash');
+const session = require('express-session');
 
 
 
@@ -13,15 +15,18 @@ const app = express()
 const indexRouter = require('../routes/index');
 const loginRouter = require('../routes/login.js');
 const homeRouter = require('../routes/home.js')
-
-const sinonChai = require('sinon-chai');
 const sinon = require('sinon')
-const passport = require('passport');
-const bcrypt = require('bcrypt');
 
 app.use('/',indexRouter )
 app.use('/login',loginRouter);
 app.use('/home',homeRouter);
+
+
+app.use(session({ secret: 'TOPSECRET', resave: true, saveUninitialized: true ,cookie: {
+  maxAge: 24 * 60 * 60 * 1000}}));
+app.use(flash());
+
+
 
 app.set('views','/home/dheemanth.g/Projects/knowPeople/views');
 app.set('view engine', 'ejs');
@@ -34,6 +39,7 @@ describe('Testing routes ',()=>{
         .get('/')
         .end((err, res) => {
           expect(err).to.be.null;
+          console.log(res);
           expect(res).to.have.status(200);
           done();
         });
@@ -52,6 +58,7 @@ describe('Testing routes ',()=>{
         .get('/login')
         .end((err, res) => {
           expect(err).to.be.null;
+          console.log(res)
           expect(res).to.have.status(200);
           done();
         });
@@ -153,3 +160,6 @@ describe("Testing /home Routes : ",()=>{
   });
 
 })
+
+
+

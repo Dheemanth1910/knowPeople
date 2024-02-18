@@ -10,7 +10,7 @@ router.get('/',(req,res)=>{
     if(req.isAuthenticated()){
         peopleDetailsModel.findOne({email:req.user})
         .then((data)=>{
-            res.render("profile", {name :data.first_name,age:data.age, intrests:data.interests,country:data.country,age:data.age,bio:data.bio,imgSrc:data.profileImg});
+            res.render("profile", {name :data.first_name,age:data.age, intrests:data.interests,country:data.country,age:data.age,bio:data.bio,imgSrc:data.profileImg,email:data.email});
         })
     }
     else 

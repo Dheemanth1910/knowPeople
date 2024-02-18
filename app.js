@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const bcrypt = require('bcrypt');
 const loginDetailsModel = require("./models/loginDetails");
-
+var flash = require('connect-flash');
 // routers 
 
 var indexRouter = require('./routes/index');
@@ -28,7 +28,7 @@ app.use(session({ secret: 'TOPSECRET', resave: true, saveUninitialized: true ,co
 
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(flash());
 passport.use(
   new Strategy(async function verify(username, password, cb) {
     try {

@@ -46,62 +46,62 @@
     </section>
     <div class="container">
         <div class="row px-5">
-            <div class="col-2 p-1 "> 
+            <div class="col-lg-2 col-md-4 col-sm-6 p-1"> 
                 <div class="card-sm icon outdoor text-center"><a><img src="images/hiking.png" class="rounded mx-auto" height="175" width="175" alt="Outdoor Adventure"></a>
                     <p class="">outdoor</p>
                 </div>
              </div>
-             <div class="col-2 p-1 ">  
+             <div class="col-lg-2 col-md-4 col-sm-6 p-1 ">  
                 <div class="card-sm icon cooking text-center"><a><img src="images/cooking.png" class="rounded mx-auto" height="175" width="175" alt="Cooking and Culinary Arts"></a>
                     <p>Cooking and Culinary Arts</p>
                 </div>
              </div>
-             <div class="col-2 p-1  " > 
+             <div class="col-lg-2 col-md-4 col-sm-6 p-1  " > 
                 <div class="card-sm icon gaming text-center"><a><img src="images/gamepad.png" class="rounded mx-auto" height="175" width="175" alt="Gaming"></a>
                     <p>Gaming</p>
                 </div>
              </div>
-             <div class="col-2 p-1  "> 
+             <div class="col-lg-2 col-md-4 col-sm-6 p-1  "> 
                 <div class="card-sm icon art text-center"><a><img src="images/art.png" class="rounded mx-auto" height="175" width="175" alt="Art & Creativity"></a>
                     <p>Art and Creativity</p>
                 </div>
              </div>
-             <div class="col-2 p-1 "> 
+             <div class="col-lg-2 col-md-4 col-sm-6 p-1 "> 
                 <div class="card-sm icon travel text-center"><a><img src="images/travel-luggage.png" class="rounded mx-auto" height="175" width="175" alt="Travel"></a>
                     <p>Travel</p>
                 </div>
             </div>
-            <div class="col-2 p-1 "> 
+            <div class="col-lg-2 col-md-4 col-sm-6 p-1 "> 
                 <div class="card-sm icon sports text-center"><a><img src="images/dumbbell.png" class="rounded mx-auto" height="175" width="175" alt="Sports and Fitness"></a>
                     <p>Fitness and Sports</p>
                 </div>
              </div>
-            <div class="col-2 p-1 "> 
+            <div class="col-lg-2 col-md-4 col-sm-6 p-1 "> 
                 <div class="card-sm icon read text-center"><a><img src="images/book.png" class="rounded mx-auto" height="175" width="175" alt="Reading"></a>
                     <p>Reading</p>
                 </div>
              </div>
-             <div class="col-2 p-1 "> 
+             <div class="col-lg-2 col-md-4 col-sm-6 p-1 "> 
                 <div class="card-sm icon music text-center"><a><img src="images/music.png" class="rounded mx-auto" height="175" width="175" alt="Music"></a>
                     <p>Music</p>
                 </div>
              </div>
-             <div class="col-2 p-1"> 
+             <div class="col-lg-2 col-md-4 col-sm-6 p-1"> 
                 <div class="card-sm icon tech text-center"><a><img src="images/innovation.png" class="rounded mx-auto" height="175" width="175" alt="Technology and Gadgets"></a>
                     <p>Technology and Gadgets</p>
                 </div>
              </div>
-             <div class="col-2 p-1"> 
+             <div class="col-lg-2 col-md-4 col-sm-6 p-1"> 
                 <div class="card-sm icon fashion text-center"><a><img src="images/trade-show.png" class="rounded mx-auto" height="175" width="175" alt="Fashion and Style"></a>
                     <p>Fashion and Style</p>
                 </div>
              </div>
-             <div class="col-2 p-1"> 
+             <div class="col-lg-2 col-md-4 col-sm-6 p-1"> 
                 <div class="card-sm icon photo text-center"><a><img src="images/camera.png" class="rounded mx-auto" height="175" width="175" alt="Photography"></a>
                     <p>Photography</p>
                 </div>
             </div>
-            <div class="col-2 p-1"> 
+            <div class="col-lg-2 col-md-4 col-sm-6 p-1"> 
                 <div class="card-sm icon science text-center"><a><img src="images/atom.png" class="rounded mx-auto" height="175" width="175" alt="Science and Astronomy"></a>
                     <p>Science and Astronomy</p>
                 </div>
@@ -117,6 +117,8 @@
     </div>
 
     </main>
+    <div id="notification-bar">
+    </div>
     <div class="border-top">
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 ">
         <div class="col-md-4 d-flex align-items-center">
@@ -131,10 +133,42 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="javascripts/searchBrowser.js"></script>
-    
     <script>
-        
+        let name=`<%=name%>`;
     </script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            
+            var socket = io();
+            socket.on('connect', () => {
+              let e_mail = '<%=email%>' ;
+              const socketId = socket.id;
+              console.log('Socket ID:', socketId);
+              socket.emit('clientSocketId', {socketId,e_mail});
+              
+        });
+        socket.on('notification', (data) => {
+    
+                htmldata=`<div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+              <div class="toast-header">
+                <img src="..." class="rounded me-2" alt="...">
+                <strong class="me-auto">knowPeople</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+              </div>
+              <div class="toast-body">
+                Hey , ${data.message} . 
+              </div>
+            </div>
+          </div>
+                `
+            $('#notification-bar').append(htmldata)
+            const toastLiveExample = document.getElementById('liveToast')
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+            toastBootstrap.show()
+            });
+    
+        </script>
+        <script src="javascripts/searchBrowser.js"></script>
     </body>
 </html>
