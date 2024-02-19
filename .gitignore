@@ -3,3 +3,4 @@ node_modules/
 credentials/
 database/
 data/
+.nyc_output/

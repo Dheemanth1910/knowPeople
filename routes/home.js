@@ -1,21 +1,23 @@
 var express = require('express');
-const peopleDetailsModel = require("../models/peopleDetails");
-
+var findOneByEmail = require('../controllers/findByMail.controller');
 var router = express.Router();
 router.use(express.urlencoded({ extended: false }));
+const peopleDetailsModel = require("../models/peopleDetails"); 
 
 router.get('/',(req,res)=>{
   if(req.isAuthenticated()){
-    peopleDetailsModel.findOne({email:req.user})
+    findOneByEmail(req.user)
     .then((data)=>{
-        res.render("home", {first_name :data.first_name,last_name : data.last_name,email : data.email});
+        res.status(200).render("home", {first_name :data.first_name,last_name : data.last_name,email : data.email});
     })
 }
   else 
     res.redirect('/login')
 })
 router.post('/getLiked',async (req,res)=>{
-  await peopleDetailsModel.findOne({email:req.user},{liked:1,_id:0}).then((data)=>{
+  await peopleDetailsModel.findOne({email:req.user},{ liked: { $slice: -10 }, _id: 0 })
+  .then((data)=>{
+    console.log(data);
     res.send(data);
   })
   .catch((err)=>{

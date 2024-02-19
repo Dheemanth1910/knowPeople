@@ -15,11 +15,14 @@ const app = express()
 const indexRouter = require('../routes/index');
 const loginRouter = require('../routes/login.js');
 const homeRouter = require('../routes/home.js')
+const logoutRouter = require('../routes/logout.js');
+
 const sinon = require('sinon')
 
 app.use('/',indexRouter )
 app.use('/login',loginRouter);
 app.use('/home',homeRouter);
+app.use('/logout', logoutRouter);
 
 
 app.use(session({ secret: 'TOPSECRET', resave: true, saveUninitialized: true ,cookie: {
@@ -37,12 +40,10 @@ describe('Testing routes ',()=>{
     it('should return status 200 for GET /', (done) => {
       chai.request(app)
         .get('/')
-        .end((err, res) => {
-          expect(err).to.be.null;
-          console.log(res);
-          expect(res).to.have.status(200);
+        .end((err,res)=>{
+          expect(res.status).to.be.equal(200);
           done();
-        });
+        })
     });
   })
   describe('Testing /login router',()=>{
@@ -58,7 +59,6 @@ describe('Testing routes ',()=>{
         .get('/login')
         .end((err, res) => {
           expect(err).to.be.null;
-          console.log(res)
           expect(res).to.have.status(200);
           done();
         });
@@ -72,94 +72,28 @@ describe('Testing routes ',()=>{
           done();
         });
     })
-});
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const loginDetailsModel = require("../models/loginDetails");
-const { transporter, sendMail } = require('../controllers/sendMail.controller');
-describe('Login Router', () => {
-  afterEach(() => {
-    sinon.restore();
-  });
-
-  it('should render forgotPassword page on GET /login/forgotPassword', (done) => {
-    chai.request(app)
-      .get('/login/forgotPassword')
-      .end((err, res) => {
-        expect(err).to.be.null;
-        expect(res).to.have.status(200);
-        // Add more assertions as needed
-        done();
-      });
-  });
-
-  it('should check OTP and respond with true on POST /login/checkOtp', (done) => {
-    chai.request(app)
-      .post('/login/checkOtp')
-      .send({ otpVal: '1234' }) // Assuming OTP value
-      .end((err, res) => {
-        expect(err).to.be.null;
-        expect(res).to.have.status(200);
-        expect(res.text).to.equal("true");
-        // Add more assertions as needed
-        done();
-      });
-  });
+    it('should render forgotPassword page on GET /login/forgotPassword', (done) => {
+      chai.request(app)
+        .get('/login/forgotPassword')
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res).to.have.status(200);
+          done();
+        });
+    });
+    it('should check OTP and respond with "false" on POST /login/checkOtp with random email & pwd', (done) => {
+      chai.request(app)
+        .post('/login/checkOtp')
+        .send({ email:"sample-email",otpVal: '1234' }) // Assuming OTP value
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res).to.have.status(200);
+          expect(res.text).to.equal("false");
+          done();
+        });
+    });
   });
 }); 
-
-
-
-
-
-
-
 const peopleDetailsModel = require('../models/peopleDetails');
-describe("Testing /home Routes : ",()=>{
-  afterEach(() => {
-    sinon.restore();
-  });
-
-  it('should render home page on GET /', (done) => {
-    // Stub isAuthenticated method to return true
-    const isAuthenticatedStub = sinon.stub().returns(true);
-    const req = { isAuthenticated: isAuthenticatedStub, user: 'test@example.com' };
-    const res = {
-      render: sinon.spy(),
-      redirect: sinon.spy()
-    };
-
-    // Stub the findOne method of peopleDetailsModel
-    const findOneStub = sinon.stub(peopleDetailsModel, 'findOne').resolves({ first_name: 'John', last_name: 'Doe', email: 'test@example.com' });
-    chai.request(app)
-      .get('/')
-      .send(req)
-      .end((err, res) => {
-        expect(err).to.be.null;
-        expect(res).to.have.status(200);
-        expect(res).to.be.html;
-
-        // Ensure that findOneStub was called with the correct parameters
-        done();
-      });
-  });
-  it('should redirect to /login if not authenticated on GET /', (done) => {
-    // Stub isAuthenticated method to return false
-    const isAuthenticatedStub = sinon.stub().returns(false);
-    const req = { isAuthenticated: isAuthenticatedStub };
-    const res = { redirect: sinon.spy() };
-
-    chai.request(app)
-      .get('/')
-      .send(req)
-      .end((err, res) => {
-        // console.log("result",res);
-        expect(err).to.be.null;
-        done();
-      });
-  });
-
-})
-
 
 

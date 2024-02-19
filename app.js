@@ -4,18 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const bcrypt = require('bcrypt');
-const loginDetailsModel = require("./models/loginDetails");
-var flash = require('connect-flash');
+
 // routers 
-
-var indexRouter = require('./routes/index');
-var homeRouter = require('./routes/home.js');
-var registerRouter = require("./routes/register.js");
-var loginRouter = require('./routes/login.js');
-var profileRouter = require('./routes/profile.js');
-var searchRouter = require('./routes/search.js');
-var logoutRouter = require("./routes/logout.js")
-
 
 var app = express();
 const Strategy = require("passport-local");
@@ -28,7 +18,7 @@ app.use(session({ secret: 'TOPSECRET', resave: true, saveUninitialized: true ,co
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
+
 passport.use(
   new Strategy(async function verify(username, password, cb) {
     try {
@@ -55,6 +45,16 @@ passport.use(
   })
 );
 
+const loginDetailsModel = require("./models/loginDetails");
+var flash = require('connect-flash');
+var indexRouter = require('./routes/index');
+var homeRouter = require('./routes/home.js');
+var registerRouter = require("./routes/register.js");
+var loginRouter = require('./routes/login.js');
+var profileRouter = require('./routes/profile.js');
+var searchRouter = require('./routes/search.js');
+var logoutRouter = require("./routes/logout.js")
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -64,7 +64,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(flash());
 app.use('/', indexRouter);
 app.use('/home',homeRouter);
 app.use('/register',registerRouter);

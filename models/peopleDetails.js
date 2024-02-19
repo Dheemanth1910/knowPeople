@@ -1,14 +1,14 @@
 const mongoose = require("mongoose") ;
 const likeSchema = new mongoose.Schema({
-    name: String ,
+    name: {type:String , required : true},
     _id: false ,
     date : {type:Date , default: Date.now()}
 });
   
 const peopleDetailsSchema = new mongoose.Schema({
     id : Number,
-    first_name : String,
-    last_name : String ,
+    first_name : {type :String , required : true},
+    last_name : {type:String , required : true },
     email : String,
     gender : String,
     interests : [String], 

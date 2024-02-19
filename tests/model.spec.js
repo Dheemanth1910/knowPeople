@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const ValidationError = mongoose.Error.ValidationError;
 
 var Item = require('../models/loginDetails.js');
+var peopleItem = require('../models/peopleDetails.js'); 
 
 describe('Testing Login model', () => {
     // this.timeout=2==;
@@ -42,3 +43,56 @@ describe('Testing Login model', () => {
       });
     
   })
+  describe("Testing peopleDetails Model",()=>{
+    beforeEach(() => {
+      sampleItemVal = {
+        id: 1,
+        last_name : 'User',
+        email: 'sampleEmail@gmail.com',
+        gender : 'male',
+        country : 'SampleCountry',
+        profileImg : 'Sample Profile Img',
+        phone : 1234567890,
+      };
+    })
+    it('it should throw error if first name or lsat name is missing ',async ()=>{
+      let item = new peopleItem({...sampleItemVal, age : 21});
+      try{
+        await item.validate();
+        throw new Error("validated unexpectedly")
+      }
+      catch(err){
+        expect(err.errors.first_name).to.exist;
+        expect(err._message).to.have.string('peopleDetailsModel validation failed');
+      }
+  });
+    it('it should throw error on giving wrong input to age or number',async ()=>{
+      let item = new peopleItem({...sampleItemVal,first_name : 'Sample',age:'abc'});
+      try{
+        await item.validate();
+        throw new Error("Validated unexpectedly")
+      }
+      catch(err){
+        expect(err.errors.age).to.exist; 
+      }
+    }) 
+    it('it should throw error on giving non-array types for liked or interests or likes',async ()=>{
+      let item = new peopleItem({...sampleItemVal,first_name:"Sample",liked:{0:"art"}}) ;
+      try{
+        await item.validate() ;
+        throw new Error("Validated Unexpectedly");
+      }
+      catch(err){
+        expect(err.errors['liked.0.name']).to.exist;
+      }
+    })
+    it('It should pass on giving first_name and last_name Only',async ()=>{
+      let item = new peopleItem({first_name:"Sample" , last_name :"User"});
+      try{
+        await item.validate();
+      }
+      catch(err){
+        throw new Error(err);
+      }
+    })
+});   
