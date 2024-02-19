@@ -13,7 +13,6 @@ describe('Test sendMail', () => {
         expect(actualResult).to.be.a('string').and.to.have.lengthOf(4);
       });
     });
-  
     describe('throw error on invalid email', () => {
       it('On error the function catches and returns not ok', () => {
         expect(() => {

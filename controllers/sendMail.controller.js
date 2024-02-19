@@ -20,7 +20,7 @@ function generateOtp(){
 function sendMail(email){
     var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if(!email.match(validRegex))
-        throw err;
+        throw new Error('Not a valid Email');
     const otp = generateOtp()
     async function main(otp) {  
       const info = await transporter.sendMail({
