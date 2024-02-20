@@ -6,10 +6,10 @@
 
 ## Installation
 
--  Clone this project using got clone. 
+-  Clone this project using git clone. 
 
 ```bash
-  https://github.com/Dheemanth1910/knowPeople.git
+  git clone https://github.com/Dheemanth1910/knowPeople.git
 ```
 
 - Navigate insdide the main folder(knowPeople) and install node module
