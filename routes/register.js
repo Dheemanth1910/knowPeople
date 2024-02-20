@@ -54,7 +54,7 @@ router.post('/submit',async (req,res)=>{
                         likes :[]
                         };
                     await peopleDetailsModel.create(person) ;
-                    res.send("data recieved successfully, Please login agian. ")
+                    res.redirect("/login")
                 });
                 
             })
