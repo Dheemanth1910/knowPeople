@@ -131,7 +131,8 @@ var socket = io();
         });
         $('.like').on('click', (e) => {
         console.log(e);
-        socket.emit('sendNotification', { recieverEmail: 'test@gmail.com', senderName : name});
+        let re_email =(e.currentTarget.getAttribute('data-custom-data'));
+        socket.emit('sendNotification', { recieverEmail: re_email, senderName : name});
         })
 }
 // Function to generate pagination links
