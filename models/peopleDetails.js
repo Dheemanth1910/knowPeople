@@ -20,6 +20,5 @@ const peopleDetailsSchema = new mongoose.Schema({
     liked : [likeSchema],
     likes : [likeSchema]
 })
-
 const peopleDetailsModel = mongoose.model('peopleDetailsModel',peopleDetailsSchema);
 module.exports = peopleDetailsModel ;

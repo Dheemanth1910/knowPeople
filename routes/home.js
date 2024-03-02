@@ -17,7 +17,7 @@ router.get('/',(req,res)=>{
 router.post('/getLiked',async (req,res)=>{
   await peopleDetailsModel.findOne({email:req.user},{ liked: { $slice: -10 }, _id: 0 })
   .then((data)=>{
-    console.log(data);
+    // console.log(data);
     res.send(data);
   })
   .catch((err)=>{
@@ -27,7 +27,7 @@ router.post('/getLiked',async (req,res)=>{
 router.post('/getlikes',async(req,res)=>{
   await peopleDetailsModel.findOne({email:req.user},{ likes: { $slice: -10 }, _id: 0 })
   .then((data)=>{
-    console.log(data);
+    // console.log(data);
     res.send(data);
   })
   .catch((err)=>{

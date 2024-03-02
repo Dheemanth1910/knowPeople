@@ -10,7 +10,7 @@
     </head>
    
     <body class=" py-4 bg-body-tertiary">
-      <div class="d-flex justify-content-center p-2">
+<div class="d-flex justify-content-center p-2">
         <%if (messages.length > 0) { %>
           <div class="alert alert-danger">
             <%= messages[0] %>
@@ -43,9 +43,8 @@
     
   
     </main>
-    <script>
+<script>
       let messages = `<%=messages%>` ;
-      console.log(messages);
     </script>
     <script src="/socket.io/socket.io.js"></script>
     <script>

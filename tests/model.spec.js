@@ -19,12 +19,8 @@ describe('Testing Login model', () => {
         let item = new Item();
         try {
           await item.validate();
-          // Validation succeeded, which is unexpected
-          // Fail the test as there should have been validation errors
           throw new Error('Validation succeeded unexpectedly');
         } catch (err) {
-          // console.log(err)
-          // Validation failed, as expected
           expect(err.errors.email).to.exist;
           expect(err.errors.password).to.exist;
         }

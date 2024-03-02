@@ -94,6 +94,7 @@ describe('Testing routes ',()=>{
     });
   });
 }); 
+const request = require('supertest');
 const peopleDetailsModel = require('../models/peopleDetails');
 
 
