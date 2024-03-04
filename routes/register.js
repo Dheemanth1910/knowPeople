@@ -52,9 +52,11 @@ router.post('/submit',async (req,res)=>{
                     await countModel.updateOne({id:result.id},{$inc:{id:1}}).exec();
                     await peopleDetailsModel.create(person) ;
                 });
-                let userData = {name:req.body.firstName,email:req.body.email,isOnline:'1',isChattingWith:[]};
-                await userModel.create(userData);
-                res.redirect('/login');
+                loginDetailsModel.findOne({email:req.body.email}).then(async (data)=>{
+                    let userData = {id:data._id,isOnline:'1',isChattingWith:[]};
+                    await userModel.create(userData);
+                    res.redirect('/login');
+                })
             })
         }
     });

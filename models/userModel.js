@@ -1,27 +1,19 @@
 const mongoose = require('mongoose')
 
-const chatSchema = {
+const chatSchema = new mongoose.Schema({
+    id:{
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'peopledetailsmodels',
+        required : true 
+    }
+})
+
+const schema = new mongoose.Schema({
     id:{
         type : mongoose.Schema.Types.ObjectId,
         ref : 'peopledetailsmodels',
         required : true 
     },
-    name:{
-        type : String ,
-        required : true 
-    }
-}
-
-const schema = mongoose.Schema({
-    name:{
-        type : String,
-        required : true
-    },
-    email:{
-        type:String,
-        required : true
-    }
-    ,
     isOnline:{
         type:String,
         default:'0',

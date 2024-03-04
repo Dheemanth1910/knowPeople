@@ -7,12 +7,12 @@ const peopleDetailsModel = require("../models/peopleDetails");
 router.get('/',(req,res)=>{
   if(req.isAuthenticated()){
     findOneByEmail(req.user)
-    .then((data)=>{
-        res.status(200).render("home", {first_name :data.first_name,last_name : data.last_name,email : data.email});
+    .then(async (data)=>{  
+      res.status(200).render("home", {first_name :data.first_name,last_name : data.last_name,email : data.email});
     })
 }
   else 
-    res.redirect('/login')
+    res.redirect('/login');
 })
 router.post('/getLiked',async (req,res)=>{
   await peopleDetailsModel.findOne({email:req.user},{ liked: { $slice: -10 }, _id: 0 })
