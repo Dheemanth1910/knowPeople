@@ -37,14 +37,11 @@ router.post('/like',async (req,res)=>{
     await peopleDetailsModel.findOne({email:req.user}).then((data)=>{
         likerName = data.first_name;
     })
-    await peopleDetailsModel.findOneAndUpdate({id:userId},{$push:{likes:{name:req.user}}}).then((data)=>{
+    await peopleDetailsModel.findOneAndUpdate({id:userId},{$push:{likes:{name:likerName}}}).then((data)=>{
         likedName = data.first_name ;
         likedEmail = data.email ;
     })
-    await peopleDetailsModel.updateOne({email:req.user},{$push:{liked:{name:likedName}}}).exec()
-
-    await userModel.updateOne({email:req.user},{$addToSet:{isChattingWith:likedName}}).exec();
-    await userModel.updateOne({email:likedEmail},{$addToSet:{isChattingWith:likerName}}).exec();
+    await peopleDetailsModel.updateOne({email:req.user},{$push:{liked:{name:likedName}}}).exec();
     res.send("data Recieved")
 })
 
